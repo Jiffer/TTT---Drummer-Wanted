@@ -9,7 +9,7 @@
  // thresholding variables
  float a_diff = 0.0;
  float W = 0.0;
- float THRESHOLD = 2.5;
+ float THRESHOLD = 1.5;
 
 // timer -- http://www.arduino.cc/playground/Code/StopWatchClass
 StopWatch timer;
@@ -50,6 +50,8 @@ void loop() {
       beatTimes[beatPtr] = timer.elapsed();
       beatPtr++;
       beatPtr %= numBeats;
+    Serial.print("last beat: ");
+    Serial.println(timer.elapsed());
     
     // average beatTimes
     float avgTime = 0;
@@ -57,8 +59,8 @@ void loop() {
       avgTime += beatTimes[i];
     }
     avgTime /= numBeats;
-    //Serial.print('avg: ');
-    
+    Serial.print("avg: ");
+    Serial.println(avgTime);
     
     if (avgTime < 100)
     {
@@ -67,7 +69,7 @@ void loop() {
     
     Serial.println(avgTime);
     avgTime -= 100;  
-    avgTime /= 14900;  // should be between 0 and 1 now
+    avgTime /= 4900;  // should be between 0 and 1 now
     avgTime = 1.0 - avgTime;  // smaller numbers mean faster beats so inverting the order
     
     float rate = 255 * avgTime;
